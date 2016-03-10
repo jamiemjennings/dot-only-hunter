@@ -6,6 +6,8 @@
 
 Hunt down `.only`s before it's too late.
 
+Works with [mocha](mocha), [tape](tape) and any tests written in BDD, TDD and QUnit style.
+
 ## Install
 
 ```sh
@@ -43,3 +45,6 @@ MIT © [David da Silva](http://dasilvacont.in)
 [npm-url]: https://npmjs.org/package/dot-only-hunter
 [downloads-image]: http://img.shields.io/npm/dm/dot-only-hunter.svg
 [downloads-url]: https://www.npmjs.org/package/dot-only-hunter
+
+[mocha]: https://github.com/mochajs/mocha
+[tape]: https://github.com/substack/tape

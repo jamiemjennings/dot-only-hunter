@@ -28,9 +28,13 @@
     "detect",
     "ci",
     "mocha",
+    "tape",
     "test",
     "tests",
-    "hook"
+    "hook",
+    "bdd",
+    "tdd",
+    "qunit"
   ],
   "devDependencies": {
     "chokidar-cli": "^1.2.0"
