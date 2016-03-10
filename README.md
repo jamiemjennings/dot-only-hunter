@@ -14,9 +14,12 @@ $ npm install --save-dev dot-only-hunter
 
 ## Usage
 
-Test directory defaults to `test`, otherwise provide it as the first argument.
+```
+$ dot-only-hunter -h
+Usage: dot-only-hunter [test_dir][options]
+  -h, --help            output usage information
+  -p, --prey <list>     additional commma-separated list of names to hunt preciding .only
 
-```bash
 $ dot-only-hunter
 dot-only-hunter: test: No such file or directory
 
