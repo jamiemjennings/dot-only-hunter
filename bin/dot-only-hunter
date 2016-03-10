@@ -1,0 +1,50 @@
+#!/bin/sh
+
+usage () {
+  echo "Usage: dot-only-hunter [test_dir][options]"
+  echo "  -h, --help            output usage information"
+  echo "  -p, --prey <list>     additional commma-separated list of names to hunt preciding .only"
+  exit 1
+}
+
+prey="it,describe,suite,test,st"
+test_dir="test"
+
+while [ $# -gt 0 ]; do
+  key="$1"
+  case $key in
+    -p|--prey)
+      if [ -z "$2" ]; then
+        echo "'prey' option requires an comma-joined list as an argument" >&2
+        exit 1
+      fi
+      prey="$prey,$2"
+      shift
+    ;;
+    -h|--help)
+      usage
+      exit 1
+    ;;
+    *)
+      test_dir="$key"
+    ;;
+  esac
+  shift
+done
+
+if ! [ -e "$test_dir" ]; then
+  echo "dot-only-hunter: $test_dir: No such file or directory" >&2
+  exit 1
+fi
+
+# Prepare OR for grep regex
+prey=$(echo "$prey" | sed "s/,/\\\|/g")
+
+echo "Hunting inside '$test_dir' for tests with \`.only\`..."
+
+if grep -nR "\($prey\)\.only" "$test_dir"; then
+  echo "Whoops! Found \`.only\` in your tests."
+  exit 1
+else
+  echo "All good!"
+fi

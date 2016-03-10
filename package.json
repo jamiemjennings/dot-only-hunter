@@ -1,0 +1,38 @@
+{
+  "name": "dot-only-hunter",
+  "version": "1.0.0",
+  "description": "Hunt down `.only`s before it's too late.",
+  "author": "David da Silva <dasilvacontin@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dasilvacontin/dot-only-hunter"
+  },
+  "bugs": "https://github.com/dasilvacontin/dot-only-hunter/issues",
+  "bin": "bin/dot-only-hunter",
+  "scripts": {
+    "lint": "shellcheck bin/dot-only-hunter",
+    "lint:watch": "chokidar 'bin/*' --initial -c 'shellcheck bin/dot-only-hunter'",
+    "start": "npm run lint:watch",
+    "pretest": "npm run lint",
+    "prepublish": "npm run test"
+  },
+  "files": [
+    "bin",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dot-only-hunter",
+    "dot",
+    "only",
+    "detect",
+    "ci",
+    "mocha",
+    "test",
+    "tests",
+    "hook"
+  ],
+  "devDependencies": {
+    "chokidar-cli": "^1.2.0"
+  }
+}
