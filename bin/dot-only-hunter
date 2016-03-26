@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# List of keywords that will be hunted if they are found preceding `.only`
+prey="it,describe,suite,test,st"
+
+# Directory for tests
+test_dir="test"
+
 usage () {
   echo "Usage: dot-only-hunter [test_dir][options]"
   echo "  -h, --help            output usage information"
@@ -7,44 +13,48 @@ usage () {
   exit 1
 }
 
-prey="it,describe,suite,test,st"
-test_dir="test"
+parse_cmd_args () {
+  while [ $# -gt 0 ]; do
+    key="$1"
+    case $key in
+      -p|--prey)
+        if [ -z "$2" ]; then
+          echo "'prey' option requires a comma-joined list as an argument" >&2
+          exit 1
+        fi
+        prey="$prey,$2"
+        shift
+        ;;
+      -h|--help)
+        usage
+        ;;
+      *)
+        test_dir="$key"
+        ;;
+    esac
+    shift
+  done
+}
 
-while [ $# -gt 0 ]; do
-  key="$1"
-  case $key in
-    -p|--prey)
-      if [ -z "$2" ]; then
-        echo "'prey' option requires a comma-joined list as an argument" >&2
-        exit 1
-      fi
-      prey="$prey,$2"
-      shift
-      ;;
-    -h|--help)
-      usage
-      exit 1
-      ;;
-    *)
-      test_dir="$key"
-      ;;
-  esac
-  shift
-done
+main () {
+  parse_cmd_args
 
-if ! [ -e "$test_dir" ]; then
-  echo "dot-only-hunter: $test_dir: No such file or directory" >&2
-  exit 1
-fi
+  if ! [ -e "$test_dir" ]; then
+    echo "dot-only-hunter: $test_dir: No such file or directory" >&2
+    exit 1
+  fi
 
-# Prepare OR for grep regex
-prey=$(echo "$prey" | sed "s/,/\\\|/g")
+  # Prepare OR for grep regex
+  prey=$(echo "$prey" | sed "s/,/\\\|/g")
 
-echo "Hunting inside '$test_dir' for tests with \`.only\`..."
+  echo "Hunting inside '$test_dir' for tests with \`.only\`..."
 
-if grep -nR "\($prey\)\.only" "$test_dir"; then
-  echo "Whoops! Found \`.only\` in your tests."
-  exit 1
-else
+  if grep -nR "\($prey\)\.only" "$test_dir"; then
+    echo "Whoops! Found \`.only\` in your tests."
+    exit 1
+  fi
+
   echo "All good!"
-fi
+}
+
+main
