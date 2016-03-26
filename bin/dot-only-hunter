@@ -20,14 +20,14 @@ while [ $# -gt 0 ]; do
       fi
       prey="$prey,$2"
       shift
-    ;;
+      ;;
     -h|--help)
       usage
       exit 1
-    ;;
+      ;;
     *)
       test_dir="$key"
-    ;;
+      ;;
   esac
   shift
 done
