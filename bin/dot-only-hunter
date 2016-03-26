@@ -37,8 +37,6 @@ parse_cmd_args () {
 }
 
 main () {
-  parse_cmd_args
-
   if ! [ -e "$test_dir" ]; then
     echo "dot-only-hunter: $test_dir: No such file or directory" >&2
     exit 1
@@ -57,4 +55,5 @@ main () {
   echo "All good!"
 }
 
+parse_cmd_args "$@"
 main
