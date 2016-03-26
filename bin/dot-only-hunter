@@ -15,7 +15,7 @@ while [ $# -gt 0 ]; do
   case $key in
     -p|--prey)
       if [ -z "$2" ]; then
-        echo "'prey' option requires an comma-joined list as an argument" >&2
+        echo "'prey' option requires a comma-joined list as an argument" >&2
         exit 1
       fi
       prey="$prey,$2"
