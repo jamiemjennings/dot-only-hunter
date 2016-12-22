@@ -47,7 +47,13 @@ main () {
 
   echo "Hunting inside '$test_dir' for tests with \`.only\`..."
 
-  grep -nR "\($prey\)\.only" "$test_dir"
+  grep_recursive_flag="-R"
+  echo "" | grep -Rq "test" > /dev/null 2>&1
+  if [[ $? -gt 1 ]] ; then
+    grep_recursive_flag="-r"
+  fi
+
+  grep -n ${grep_recursive_flag} "\($prey\)\.only" "$test_dir"
   rc=$?
   if [[ $rc -eq 0 ]]; then
     echo "Whoops! Found \`.only\` in your tests."
